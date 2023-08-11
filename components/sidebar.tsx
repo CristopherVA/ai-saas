@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import Robot from '@/public/robot.png'
+import FreeLimitCount from './free-counter'
 
 const monserrat = Montserrat({
     weight: '700',
@@ -56,12 +57,16 @@ const routes = [
     },
 ]
 
-const Sidebar = () => {
+interface PropsSidebar {
+    apiLimitCount: number
+}
+
+const Sidebar = ({ apiLimitCount = 0 }: PropsSidebar) => {
 
     const pathname = usePathname()
 
     return (
-        <div className='space-y-4 py-4 h-full flex-col text-white bg-[#111827]'>
+        <div className='space-y-4 py-4 h-full flex-col flex text-white bg-[#111827]'>
             <div className='px-3 py-2 flex-1'>
                 <Link
                     href='/dashboard'
@@ -92,6 +97,7 @@ const Sidebar = () => {
                     ))}
                 </div>
             </div>
+            <FreeLimitCount apiLimitCount={apiLimitCount} />
         </div>
     )
 }

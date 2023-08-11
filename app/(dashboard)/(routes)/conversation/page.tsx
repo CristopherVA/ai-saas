@@ -9,6 +9,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import axios from "axios";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 // Componets
 import { Heading } from "../../../../components/heading";
@@ -24,6 +25,7 @@ import BotAvatar from "@/components/bot-avatar";
 const ConversationPage = () => {
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
   const router = useRouter();
+  const proModal = useProModal()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,6 +54,9 @@ const ConversationPage = () => {
       form.reset();
     } catch (error: any) {
       //TODO: Modal Pro
+      if (error?.response?.status === 403) {
+        proModal.onOpen()
+      }
       console.log(error);
     } finally {
       router.refresh();
