@@ -12,7 +12,7 @@ import axios from "axios";
 import { useProModal } from "@/hooks/use-pro-modal";
 
 // Componets
-import { Heading } from "../../../../components/heading";
+import { Heading } from "@/components/heading";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,7 @@ import Loader from "@/components/loader";
 import { cn } from "@/lib/utils";
 import UserAvatar from "@/components/user-avatar";
 import BotAvatar from "@/components/bot-avatar";
+import toast from "react-hot-toast";
 
 const ConversationPage = () => {
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
@@ -37,12 +38,14 @@ const ConversationPage = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+
     try {
+
       const userMessage: ChatCompletionRequestMessage = {
         role: "user",
         content: values.prompt,
       };
+
       const newMessages = [...messages, userMessage];
 
       const response = await axios.post("/api/conversation", {
@@ -52,10 +55,13 @@ const ConversationPage = () => {
       setMessages((current) => [...current, userMessage, response.data]);
 
       form.reset();
+
     } catch (error: any) {
       //TODO: Modal Pro
       if (error?.response?.status === 403) {
         proModal.onOpen()
+      } else {
+        toast.error("Something went wrong!")
       }
       console.log(error);
     } finally {

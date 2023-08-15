@@ -1,5 +1,4 @@
 "use client";
-
 import { formSchema } from "./constant";
 import { VideoIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -17,12 +16,13 @@ import { Button } from "@/components/ui/button";
 import Empty from "@/components/empty";
 import Loader from "@/components/loader";
 import { useProModal } from "@/hooks/use-pro-modal";
+import toast from "react-hot-toast";
 
 const VideoPage = () => {
 
   const [video, setVideo] = useState<string>();
   const router = useRouter();
-  const proModal = useProModal()
+  const proModal = useProModal();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,13 +45,13 @@ const VideoPage = () => {
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen()
+      } else {
+        toast.error("Something went wrong!")
       }
     } finally {
       router.refresh();
     }
   };
-
-  console.log(video)
 
   return (
     <div>
