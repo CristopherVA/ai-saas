@@ -64,6 +64,8 @@ interface PropsSidebar {
 
 const Sidebar = ({ apiLimitCount = 0, isPro }: PropsSidebar) => {
     const pathname = usePathname()
+
+    console.log(isPro)
     return (
         <div className='space-y-4 py-4 h-full flex-col flex text-white bg-[#111827]'>
             <div className='px-3 py-2 flex-1'>
@@ -96,7 +98,7 @@ const Sidebar = ({ apiLimitCount = 0, isPro }: PropsSidebar) => {
                     ))}
                 </div>
             </div>
-            {isPro && (
+            {!isPro && (
                 <FreeLimitCount isPro={isPro} apiLimitCount={apiLimitCount} />
             )}
         </div>

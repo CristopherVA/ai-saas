@@ -21,7 +21,9 @@ const FreeCounter = ({ apiLimitCount, isPro }: FreeCounterProps) => {
 
   if (!mounted) return null;
 
-  if (isPro) return null;
+  if (isPro) {
+    return null
+  }
 
   return (
     <div className="px-3">

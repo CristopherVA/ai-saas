@@ -13,7 +13,7 @@ const DashboardLayout = async ({
 
     const apiLimitCount = await getApiLimitCount();
     const isPro = await checkSubscription();
-
+    console.log(apiLimitCount, isPro)
     return (
         <div className='h-full relative'>
             <div className='hidden h-full md:flex md:flex-col md:fixed md:w-72 md:inset-y-0  bg-gray-900'>

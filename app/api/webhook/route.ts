@@ -42,7 +42,7 @@ export async function POST(
         })
     }
 
-    if (event.type === 'checkout.session.succeeded') {
+    if (event.type === 'invoice.payment_succeeded') {
         const subscription = await stripe.subscriptions.retrieve(
             session.subscription as string
         )
